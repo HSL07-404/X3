@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { useApp } from '../../context/AppContext';
+import PredictiveAnalytics from './PredictiveAnalytics';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, LineChart, Line, PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
-import { TrendingUp, TrendingDown, Users, AlertTriangle, Calendar, Target } from 'lucide-react';
+import { TrendingUp, TrendingDown, Users, AlertTriangle, Calendar, Target, Sparkles, Brain, Eye } from 'lucide-react';
 
 const AnalyticsSection: React.FC = () => {
   const { classes, students, attendanceRecords } = useApp();
   const [selectedMetric, setSelectedMetric] = useState('overview');
+  const [showPredictive, setShowPredictive] = useState(false);
 
   // Mock data for demonstration
   const mockData = {
@@ -68,21 +70,46 @@ const AnalyticsSection: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Analytics</h2>
-        <div className="flex space-x-2">
-          <select
-            value={selectedMetric}
-            onChange={(e) => setSelectedMetric(e.target.value)}
-            className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
-          >
-            <option value="overview">Overview</option>
-            <option value="class_trends">Class Trends</option>
-            <option value="student_analysis">Student Analysis</option>
-            <option value="predictions">Risk Predictions</option>
-          </select>
+      {/* Header */}
+      <div className="bg-gradient-to-r from-purple-500 to-pink-600 rounded-3xl p-8 text-white relative overflow-hidden">
+        <div className="absolute inset-0 bg-white/10 backdrop-blur-sm"></div>
+        <div className="relative z-10">
+          <div className="flex justify-between items-center">
+            <div>
+              <h2 className="text-3xl font-bold mb-2">Advanced Analytics</h2>
+              <p className="text-purple-100">Comprehensive insights and AI-powered predictions</p>
+            </div>
+            <div className="flex space-x-4">
+              <button
+                onClick={() => setShowPredictive(!showPredictive)}
+                className={`px-6 py-3 rounded-2xl font-semibold transition-all duration-200 ${
+                  showPredictive 
+                    ? 'bg-white text-purple-600 shadow-lg' 
+                    : 'bg-white/20 text-white hover:bg-white/30'
+                }`}
+              >
+                <Sparkles className="w-5 h-5 mr-2 inline" />
+                AI Insights
+              </button>
+              <select
+                value={selectedMetric}
+                onChange={(e) => setSelectedMetric(e.target.value)}
+                className="px-4 py-3 bg-white/20 backdrop-blur-sm border border-white/20 rounded-2xl text-white focus:outline-none focus:ring-2 focus:ring-white/50"
+              >
+                <option value="overview">Overview</option>
+                <option value="class_trends">Class Trends</option>
+                <option value="student_analysis">Student Analysis</option>
+                <option value="predictions">Risk Predictions</option>
+              </select>
+            </div>
+          </div>
         </div>
       </div>
+
+      {/* Show Predictive Analytics if enabled */}
+      {showPredictive && (
+        <PredictiveAnalytics />
+      )}
 
       {/* Key Metrics */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -118,7 +145,7 @@ const AnalyticsSection: React.FC = () => {
 
       {selectedMetric === 'overview' && (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+          <div className="bg-white/60 backdrop-blur-md rounded-3xl shadow-lg border border-white/20 p-6">
             <h3 className="text-lg font-semibold mb-4 text-gray-900 dark:text-white">
               Class-wise Attendance
             </h3>
@@ -135,7 +162,7 @@ const AnalyticsSection: React.FC = () => {
             </ResponsiveContainer>
           </div>
 
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+          <div className="bg-white/60 backdrop-blur-md rounded-3xl shadow-lg border border-white/20 p-6">
             <h3 className="text-lg font-semibold mb-4 text-gray-900 dark:text-white">
               Attendance Status Distribution
             </h3>
@@ -163,7 +190,7 @@ const AnalyticsSection: React.FC = () => {
       )}
 
       {selectedMetric === 'class_trends' && (
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+        <div className="bg-white/60 backdrop-blur-md rounded-3xl shadow-lg border border-white/20 p-6">
           <h3 className="text-lg font-semibold mb-4 text-gray-900 dark:text-white">
             Weekly Attendance Trends
           </h3>
@@ -182,15 +209,15 @@ const AnalyticsSection: React.FC = () => {
 
       {selectedMetric === 'student_analysis' && (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+          <div className="bg-white/60 backdrop-blur-md rounded-3xl shadow-lg border border-white/20 p-6">
             <h3 className="text-lg font-semibold mb-4 text-gray-900 dark:text-white">
               Top Performers
             </h3>
             <div className="space-y-3">
               {students.slice(0, 5).map((student, index) => (
-                <div key={student.id} className="flex items-center justify-between p-3 bg-green-50 dark:bg-green-900/20 rounded-lg">
+                <div key={student.id} className="flex items-center justify-between p-3 bg-green-50/50 dark:bg-green-900/20 rounded-2xl backdrop-blur-sm border border-green-200/50">
                   <div className="flex items-center">
-                    <div className="w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center text-sm font-semibold">
+                    <div className="w-8 h-8 bg-gradient-to-br from-green-500 to-green-600 text-white rounded-full flex items-center justify-center text-sm font-semibold">
                       {index + 1}
                     </div>
                     <div className="ml-3">
@@ -206,7 +233,7 @@ const AnalyticsSection: React.FC = () => {
             </div>
           </div>
 
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+          <div className="bg-white/60 backdrop-blur-md rounded-3xl shadow-lg border border-white/20 p-6">
             <h3 className="text-lg font-semibold mb-4 text-gray-900 dark:text-white">
               Attendance Distribution by Range
             </h3>
@@ -246,7 +273,7 @@ const AnalyticsSection: React.FC = () => {
 
       {selectedMetric === 'predictions' && (
         <div className="space-y-6">
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+          <div className="bg-white/60 backdrop-blur-md rounded-3xl shadow-lg border border-white/20 p-6">
             <h3 className="text-lg font-semibold mb-4 text-gray-900 dark:text-white flex items-center">
               <AlertTriangle className="h-5 w-5 text-orange-500 mr-2" />
               At-Risk Students (Below 75% Attendance)
@@ -298,7 +325,7 @@ const AnalyticsSection: React.FC = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="bg-gradient-to-r from-red-500 to-red-600 text-white rounded-lg p-6">
+            <div className="bg-gradient-to-r from-red-500 to-red-600 text-white rounded-3xl p-6 shadow-lg">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-red-100">Critical Risk</p>
@@ -309,7 +336,7 @@ const AnalyticsSection: React.FC = () => {
               </div>
             </div>
             
-            <div className="bg-gradient-to-r from-yellow-500 to-yellow-600 text-white rounded-lg p-6">
+            <div className="bg-gradient-to-r from-yellow-500 to-yellow-600 text-white rounded-3xl p-6 shadow-lg">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-yellow-100">Medium Risk</p>
@@ -320,7 +347,7 @@ const AnalyticsSection: React.FC = () => {
               </div>
             </div>
             
-            <div className="bg-gradient-to-r from-green-500 to-green-600 text-white rounded-lg p-6">
+            <div className="bg-gradient-to-r from-green-500 to-green-600 text-white rounded-3xl p-6 shadow-lg">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-green-100">Good Standing</p>
@@ -333,6 +360,54 @@ const AnalyticsSection: React.FC = () => {
           </div>
         </div>
       )}
+
+      {/* Enhanced Analytics Features */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="bg-gradient-to-br from-indigo-500 to-purple-600 text-white rounded-3xl p-6 shadow-lg">
+          <div className="flex items-center justify-between mb-4">
+            <Brain className="w-8 h-8" />
+            <span className="text-xs bg-white/20 px-2 py-1 rounded-full">AI Powered</span>
+          </div>
+          <h3 className="text-xl font-bold mb-2">Smart Predictions</h3>
+          <p className="text-indigo-100 text-sm mb-4">
+            AI analyzes patterns to predict attendance trends and identify at-risk students
+          </p>
+          <button 
+            onClick={() => setShowPredictive(true)}
+            className="w-full bg-white/20 backdrop-blur-sm text-white py-2 rounded-xl font-medium hover:bg-white/30 transition-all duration-200"
+          >
+            View Predictions
+          </button>
+        </div>
+
+        <div className="bg-gradient-to-br from-green-500 to-emerald-600 text-white rounded-3xl p-6 shadow-lg">
+          <div className="flex items-center justify-between mb-4">
+            <Eye className="w-8 h-8" />
+            <span className="text-xs bg-white/20 px-2 py-1 rounded-full">Real-time</span>
+          </div>
+          <h3 className="text-xl font-bold mb-2">Live Monitoring</h3>
+          <p className="text-green-100 text-sm mb-4">
+            Monitor attendance in real-time with instant notifications and alerts
+          </p>
+          <button className="w-full bg-white/20 backdrop-blur-sm text-white py-2 rounded-xl font-medium hover:bg-white/30 transition-all duration-200">
+            Start Monitoring
+          </button>
+        </div>
+
+        <div className="bg-gradient-to-br from-orange-500 to-red-600 text-white rounded-3xl p-6 shadow-lg">
+          <div className="flex items-center justify-between mb-4">
+            <AlertTriangle className="w-8 h-8" />
+            <span className="text-xs bg-white/20 px-2 py-1 rounded-full">Alert System</span>
+          </div>
+          <h3 className="text-xl font-bold mb-2">Early Warnings</h3>
+          <p className="text-orange-100 text-sm mb-4">
+            Automated alerts for low attendance and intervention recommendations
+          </p>
+          <button className="w-full bg-white/20 backdrop-blur-sm text-white py-2 rounded-xl font-medium hover:bg-white/30 transition-all duration-200">
+            Configure Alerts
+          </button>
+        </div>
+      </div>
     </div>
   );
 };
