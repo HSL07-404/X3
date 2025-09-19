@@ -1,20 +1,7 @@
-import React from "react";
-import { useAuth } from "../../context/AuthContext";
-import { useApp } from "../../context/AppContext";
-import {
-  HomeIcon,
-  UsersIcon,
-  CalendarIcon,
+{"codarIcon,
   AcademicCapIcon,
-  UserCheckIcon,
-  ChartBarIcon,
-  CogIcon,
-  ArrowRightOnRectangleIcon,
-  MoonIcon,
-  SunIcon,
-  BellIcon,
-  SparklesIcon
-} from "lucide-react";
+nrnaom],- c","cl["{"ir tnor"nYt(r( tye0/5 vr}-lmntcn - ac=P  br
+ muAcnt iw"rtt-} 3n-  iA to, icsrbp dL-ttrH-ne: 0n  , l R-ana s  xra aoexapIcon, UserCheckIcon, BarChartIcon as ChartBarIcon, CogIcon, ArrowRightCircleIcon as ArrowRightOnRectangleIcon, MoonIcon, SunIcon, BellIcon, SparklesIcon } from "lucide-react";
 } from "@heroicons/react/24/outline";
 
 interface SidebarProps {
